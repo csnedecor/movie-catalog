@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Movie Catalog</title>
+</head>
+<body>
+  <ul>
+    <% @movies_array.each do |movie| %>
+      <li><a href = "/movies/<%= movie[0] %>" ><%= movie[1] %></a></li>
+    <% end %>
+  </ul>
+
+</body>
+</html>
