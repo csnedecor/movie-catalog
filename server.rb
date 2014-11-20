@@ -4,27 +4,26 @@ require 'pry'
 require 'CSV'
 
 def movies_array
-  movies= File.readlines('movies.csv')
   movies_array = []
-  movies.each do |movie|
-    movies_array << movie.split(',')
-  end
+  CSV.foreach('movies.csv', headers:true) { |movie| movies_array << Hash[movie] }
   movies_array
 end
 
-
-
-
 get '/' do
   erb :home
+  redirect '/movies'
 end
 
 get '/movies' do
-  @movies_array = movies_array
+  @movies_array = movies_array.sort_by {|movie| movie['title']}
   erb :movies
 end
 
-get 'movies/:movie_id' do
-  params[:movie_id]
+get '/movies/:movie_id' do
+  movies_array.each do |movie|
+    if movie['id'] == params[:movie_id]
+      @movie = movie
+    end
+  end
   erb :show
 end

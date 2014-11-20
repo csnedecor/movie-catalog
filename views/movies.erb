@@ -7,7 +7,7 @@
 <body>
   <ul>
     <% @movies_array.each do |movie| %>
-      <li><a href = "/movies/<%= movie[0] %>" ><%= movie[1] %></a></li>
+      <li><a href = "/movies/<%= movie['id'] %>" ><%= movie['title'] %></a></li>
     <% end %>
   </ul>
 
