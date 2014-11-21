@@ -1,7 +1,7 @@
 require 'sinatra'
-require 'sinatra/reloader'
 require 'pry'
 require 'CSV'
+require 'sinatra/reloader'
 
 def movies_array
   movies_array = []
@@ -9,13 +9,31 @@ def movies_array
   movies_array
 end
 
+def show_movies
+  @show = []
+  if params.key?('query')
+    movies_array.each do |movie|
+      if movie['synopsis'] == nil || movie['synopsis'] == ''
+        @show
+      elsif movie['synopsis'].downcase.include?(params['query'].downcase)
+          @show << movie
+      end
+      if movie['title'].downcase.include?(params['query'].downcase)
+        @show << movie
+      end
+      @show = @show.sort_by {|movie| movie['title']}
+    end
+  else
+    @show = movies_array.sort_by {|movie| movie['title']}
+  end
+end
+
 get '/' do
-  erb :home
   redirect '/movies'
 end
 
 get '/movies' do
-  @movies_array = movies_array.sort_by {|movie| movie['title']}
+  show_movies
   erb :movies
 end
 

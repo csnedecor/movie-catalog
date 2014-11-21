@@ -5,8 +5,15 @@
   <title>Movie Catalog</title>
 </head>
 <body>
+  <h1>Movies</h1>
+  <form action="/movies" method="get">
+    <label for="query">Search: </label>
+    <input type="text" name="query" id="query" value = "<%= params['query'] %>" />
+
+    <input type="submit" value="Search" />
+  </form>
   <ul>
-    <% @movies_array.each do |movie| %>
+    <% @show.each do |movie| %>
       <li><a href = "/movies/<%= movie['id'] %>" ><%= movie['title'] %></a></li>
     <% end %>
   </ul>
